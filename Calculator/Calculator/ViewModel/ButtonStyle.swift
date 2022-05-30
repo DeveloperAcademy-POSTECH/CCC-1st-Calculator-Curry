@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-enum ButtonType {
+enum ButtonType: Hashable {
     case numbers(String)
     case operators(String)
     case etc(String)
@@ -69,6 +69,7 @@ struct CalculatorButtonStyle: ButtonStyle {
                 RoundedRectangle(cornerRadius: 50)
                 .fill(buttonColor)
                 .frame(width: width, height: height)
+//                .padding(0.5)
             )
     }
 

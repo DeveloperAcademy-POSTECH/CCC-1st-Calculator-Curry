@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State var value = "0"
+    
     var body: some View {
         ZStack {
             Color.black
@@ -16,14 +18,13 @@ struct ContentView: View {
             VStack {
                 Spacer()
                 
-                Text("0.99999999")
+                Text(value)
                     .frame(width: UIScreen.main.bounds.width, alignment: .trailing)
                     .font(.system(size: 60))
                     .foregroundColor(.white)
                     .padding()
             
                 ButtonView()
-                    .padding()
             }
         }
     }

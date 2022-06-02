@@ -69,7 +69,6 @@ struct CalculatorButtonStyle: ButtonStyle {
                 RoundedRectangle(cornerRadius: 50)
                 .fill(buttonColor)
                 .frame(width: width, height: height)
-//                .padding(0.5)
             )
     }
 

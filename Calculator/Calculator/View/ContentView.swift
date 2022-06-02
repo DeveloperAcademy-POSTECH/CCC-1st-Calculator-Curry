@@ -11,10 +11,6 @@ struct ContentView: View {
     @State var value = "0"
     
     var body: some View {
-        ZStack {
-            Color.black
-                .ignoresSafeArea(.all)
-            
             VStack {
                 Spacer()
                 
@@ -26,7 +22,7 @@ struct ContentView: View {
             
                 ButtonView()
             }
-        }
+            .preferredColorScheme(.dark)
     }
 }
 

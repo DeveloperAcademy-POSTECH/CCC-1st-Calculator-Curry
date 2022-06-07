@@ -7,13 +7,6 @@
 
 import Foundation
 
-enum Operation {
-    case Add
-    case Subtract
-    case Divide
-    case Multiply
-    case Equal
-    case AC
-    case SignChanger
-    case Percentage
+class Calculator: ObservableObject {
+    @Published var displayNumber = "0"
 }

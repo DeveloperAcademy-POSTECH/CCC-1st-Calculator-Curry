@@ -8,11 +8,13 @@
 import SwiftUI
 
 struct CalculationButton: View {
+    @ObservedObject var calculator: Calculator
+    
     let buttonType: ButtonType
     
     var body: some View {
         Button {
-            
+//            calculator.pushed(buttonType)
         } label: {
             setButtonText(buttonType)
         }
@@ -22,25 +24,19 @@ struct CalculationButton: View {
     }
 }
 
-struct CalculationButton_Previews: PreviewProvider {
-    static var previews: some View {
-        CalculationButton(buttonType: ButtonType.numbers("0"))
-    }
-}
-
 extension CalculationButton {
     
     func setButtonText(_ buttonType: ButtonType) -> Text {
         switch buttonType {
-        case .numbers(let string):
-            return Text(string)
+        case .numbers(let type):
+            return Text(type.rawValue)
             
-        case .operators(let string):
-            return Text(Image(systemName: string))
+        case .operators(let type):
+            return Text(Image(systemName: type.rawValue))
             
-        case .etc(let string):
-            if string == "AC" { return Text(string) }
-            return Text(Image(systemName: string))
+        case .etc(let type):
+            if type == .AC { return Text(type.rawValue) }
+            return Text(Image(systemName: type.rawValue))
         }
     }
     

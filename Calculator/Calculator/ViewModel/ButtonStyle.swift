@@ -8,9 +8,37 @@
 import SwiftUI
 
 enum ButtonType: Hashable {
-    case numbers(String)
-    case operators(String)
-    case etc(String)
+    case numbers(NumberPad)
+    case operators(Operation)
+    case etc(EtcOperation)
+}
+
+enum Operation: String {
+    case Add = "plus"
+    case Subtract = "minus"
+    case Divide = "divide"
+    case Multiply = "multiply"
+    case Equal = "equal"
+}
+
+enum EtcOperation: String {
+    case AC = "AC"
+    case SignChanger = "plus.forwardslash.minus"
+    case Percentage = "percent"
+}
+
+enum NumberPad: String {
+    case one = "1"
+    case two = "2"
+    case three = "3"
+    case four = "4"
+    case five = "5"
+    case six = "6"
+    case seven = "7"
+    case eight = "8"
+    case nine = "9"
+    case zero = "0"
+    case dot = "."
 }
 
 struct CalculatorButtonStyle: ButtonStyle {
@@ -21,8 +49,8 @@ struct CalculatorButtonStyle: ButtonStyle {
     
     private var width: CGFloat {
         switch buttonType {
-        case .numbers(let string):
-            if string == "0" { return ((UIScreen.main.bounds.width - (4 * 12)) / 4) * 2 + 6 }
+        case .numbers(let type):
+            if type == .zero { return ((UIScreen.main.bounds.width - (4 * 12)) / 4) * 2 + 6 }
             else { return (UIScreen.main.bounds.width - (5 * 15)) / 4 }
         default:
             return (UIScreen.main.bounds.width - (5 * 15)) / 4

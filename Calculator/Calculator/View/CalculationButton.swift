@@ -14,7 +14,7 @@ struct CalculationButton: View {
     
     var body: some View {
         Button {
-//            calculator.pushed(buttonType)
+            calculator.touchButton(buttonType)
         } label: {
             setButtonText(buttonType)
         }
@@ -35,7 +35,13 @@ extension CalculationButton {
             return Text(Image(systemName: type.rawValue))
             
         case .etc(let type):
-            if type == .AC { return Text(type.rawValue) }
+            if type == .AC {
+                if calculator.isTouchedNumberPad {
+                    return Text("C")
+                } else {
+                    return Text(type.rawValue)
+                }
+            }
             return Text(Image(systemName: type.rawValue))
         }
     }

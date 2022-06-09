@@ -16,7 +16,7 @@ struct CalculationButton: View {
         Button {
             calculator.touchButton(buttonType)
         } label: {
-            setButtonText(buttonType)
+            CalculatorText(calculator: calculator, buttonType: buttonType)
         }
         .buttonStyle(
             CalculatorButtonStyle(buttonType: buttonType)
@@ -24,26 +24,27 @@ struct CalculationButton: View {
     }
 }
 
-extension CalculationButton {
+struct CalculatorText: View {
+    @ObservedObject var calculator: Calculator
     
-    func setButtonText(_ buttonType: ButtonType) -> Text {
+    let buttonType: ButtonType
+    
+    var body: some View {
         switch buttonType {
-        case .numbers(let type):
-            return Text(type.rawValue)
+        case .numbers(let numberPad):
+            Text(numberPad.rawValue)
             
-        case .operators(let type):
-            return Text(Image(systemName: type.rawValue))
+        case .operators(let operation):
+            Text(Image(systemName: operation.rawValue))
             
-        case .etc(let type):
-            if type == .AC {
-                if calculator.isTouchedNumberPad {
-                    return Text("C")
-                } else {
-                    return Text(type.rawValue)
-                }
+        case .etc(let etcOperation):
+            switch etcOperation {
+            case .AC:
+                if calculator.isTouchedNumberPad { Text("C") }
+                else { Text(etcOperation.rawValue) }
+            default:
+                Text(Image(systemName: etcOperation.rawValue))
             }
-            return Text(Image(systemName: type.rawValue))
         }
     }
-    
 }

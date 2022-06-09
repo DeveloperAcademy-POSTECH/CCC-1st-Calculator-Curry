@@ -8,19 +8,19 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State var value = "0"
+    @ObservedObject var calculator = Calculator()
     
     var body: some View {
             VStack {
                 Spacer()
                 
-                Text(value)
+                Text(String(calculator.displayNumber))
                     .frame(width: UIScreen.main.bounds.width, alignment: .trailing)
                     .font(.system(size: 60))
                     .foregroundColor(.white)
                     .padding()
             
-                ButtonView()
+                ButtonView(calculator: calculator)
             }
             .preferredColorScheme(.dark)
     }

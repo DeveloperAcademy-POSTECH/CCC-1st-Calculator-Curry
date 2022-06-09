@@ -11,18 +11,19 @@ class Calculator: ObservableObject {
     
     @Published var displayNumber = "0"
     
-    var isTouchedOperation = false
-    var isTouchedEqual = false
-    var isTouchedNumberPad = false
-    var isTouchedDot = false
-    var isTouchedSignChanger = false
+    private var isTouchedOperation = false
+    private var isTouchedEqual = false
+    private var isTouchedDot = false
+    private var isTouchedSignChanger = false
     
-    var displayNumberContainer = ""
-    var operationContainer: [String] = []
+    var isTouchedNumberPad = false
+    
+    private var displayNumberContainer = ""
+    private var operationContainer: [String] = []
     
     // = 을 연속으로 누를 시 계산을 위한 변수
-    var lastNumber = ""
-    var lastOperator = ""
+    private var lastNumber = ""
+    private var lastOperator = ""
     
     // only touch
     func touchButton(_ type: ButtonType) {
@@ -37,7 +38,7 @@ class Calculator: ObservableObject {
     }
     
     // touch sevaral buttons
-    func touchNumberPad(_ numberPad: NumberPad) {
+    private func touchNumberPad(_ numberPad: NumberPad) {
         //TODO: 연속적으로 Equal 버튼 누를 시 계산되도록 로직 수정
         if isTouchedEqual {
             displayNumberContainer = ""
@@ -61,7 +62,7 @@ class Calculator: ObservableObject {
     
     
     // Number function
-    func addNumberPad(_ numberPad: NumberPad) {
+    private func addNumberPad(_ numberPad: NumberPad) {
         switch numberPad {
         case .dot:
             if !isTouchedDot { displayNumberContainer += numberPad.rawValue }
@@ -71,7 +72,7 @@ class Calculator: ObservableObject {
         }
     }
     
-    func touchOperation(_ operation: Operation) {
+    private func touchOperation(_ operation: Operation) {
         if !isTouchedOperation {
             operationContainer.append(displayNumberContainer)
             lastNumber = displayNumberContainer
@@ -84,7 +85,7 @@ class Calculator: ObservableObject {
         displayNumberContainer = ""
     }
     
-    func touchEtcOperation(_ etcOperation: EtcOperation) {
+    private func touchEtcOperation(_ etcOperation: EtcOperation) {
         switch etcOperation {
         case .AC:
             ac()
@@ -98,7 +99,7 @@ class Calculator: ObservableObject {
     
     
     // Operation functions
-    func addOperation(_ operation: Operation) {
+    private func addOperation(_ operation: Operation) {
         switch operation {
         case .Add:
             add()
@@ -118,27 +119,27 @@ class Calculator: ObservableObject {
         }
     }
 
-    func add() {
+    private func add() {
         operationContainer.append("+")
         lastOperator = "+"
     }
     
-    func minus() {
+    private func minus() {
         operationContainer.append("-")
         lastOperator = "-"
     }
     
-    func divide() {
+    private func divide() {
         operationContainer.append("/")
         lastOperator = "/"
     }
     
-    func multiply() {
+    private func multiply() {
         operationContainer.append("*")
         lastOperator = "*"
     }
     
-    func operate() {
+    private func operate() {
         let number = operationContainer.reduce("") { $0 + $1 }
         print(number)
         let expression = NSExpression(format: number)
@@ -147,7 +148,7 @@ class Calculator: ObservableObject {
         displayNumber = judgeDemicalNumber(value)
     }
     
-    func operateAfterEqual() {
+    private func operateAfterEqual() {
         print("실행됨")
         let newNumber = lastNumber + lastOperator + displayNumber
         print(newNumber)
@@ -160,7 +161,7 @@ class Calculator: ObservableObject {
     
     
     // for operate()
-    func judgeDemicalNumber(_ value: Double?) -> String {
+    private func judgeDemicalNumber(_ value: Double?) -> String {
         guard let value = value else { return "" }
         
         let refinedValue = Double(Int(value))
@@ -172,14 +173,14 @@ class Calculator: ObservableObject {
     
     
     // Etc functions
-    func ac() {
+    private func ac() {
         displayNumber = "0"
         
         isTouchedEqual = false
         reset()
     }
     
-    func changeSign(_ isTouchedSignChanger: Bool) {
+    private func changeSign(_ isTouchedSignChanger: Bool) {
         if !isTouchedSignChanger {
             self.isTouchedSignChanger = true
             addZero()
@@ -193,7 +194,7 @@ class Calculator: ObservableObject {
         }
     }
     
-    func makePercentage() {
+    private func makePercentage() {
         if let number = Double(displayNumberContainer) {
             let newNumber = number / 100
             if newNumber == -0.0 {
@@ -212,17 +213,17 @@ class Calculator: ObservableObject {
     
     
     // for changeSign()
-    func addZero() {
+    private func addZero() {
         if displayNumberContainer == "" { displayNumberContainer += "0" }
     }
     
-    func deleteMinus() {
+    private func deleteMinus() {
         var newNumber = ""
         for str in displayNumberContainer { if str != "-" { newNumber += String(str) } }
         displayNumberContainer = newNumber
     }
     
-    func judgeZeroSign() {
+    private func judgeZeroSign() {
         // -0 또는 0에서 NumberPad를 터치할 시
         switch displayNumberContainer {
         case "-0":
@@ -237,7 +238,7 @@ class Calculator: ObservableObject {
     
     
     //history reset
-    func reset() {
+    private func reset() {
         isTouchedOperation = false
         isTouchedNumberPad = false
         isTouchedDot = false
@@ -251,7 +252,7 @@ class Calculator: ObservableObject {
 //        lastOperator = ""
     }
     
-    func display() {
+    private func display() {
         displayNumber = displayNumberContainer
     }
 }
